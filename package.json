@@ -1,0 +1,25 @@
+{
+  "name": "harmonyos-sans-font",
+  "version": "1.0.0",
+  "description": "收录官方发布的HarmonyOS Sans字体",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanami09/HarmonyOS-Sans-Font.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/issues"
+  },
+  "homepage": "https://github.com/kanami09/HarmonyOS-Sans-Font#readme",
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
