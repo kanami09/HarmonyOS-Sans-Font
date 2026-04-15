@@ -1,0 +1,55 @@
+name: Update Fonts
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 22 * * *" # UTC 22:00 = 北京时间 06:00
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
+
+            - run: npm ci
+
+            - run: npm start
+
+            - name: Read version
+              id: version
+              run: |
+                  VERSION=$(cat files/.version)
+                  echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+            - name: Commit and push
+              id: commit
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "Update font version to ${{ steps.version.outputs.version }}"
+                  file_pattern: files/
+
+            - name: Tag
+              if: steps.commit.outputs.changes_detected == 'true'
+              run: |
+                  git tag "v${{ steps.version.outputs.version }}"
+                  git push --tags
+
+            - name: Pack fonts
+              if: steps.commit.outputs.changes_detected == 'true'
+              run: |
+                  cd files
+                  zip -r ../HarmonyOS-Sans-${{ steps.version.outputs.version }}.zip .
+
+            - name: Create Release
+              if: steps.commit.outputs.changes_detected == 'true'
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: v${{ steps.version.outputs.version }}
+                  name: HarmonyOS Sans ${{ steps.version.outputs.version }}
+                  files: HarmonyOS-Sans-${{ steps.version.outputs.version }}.zip
+                  generate_release_notes: true
