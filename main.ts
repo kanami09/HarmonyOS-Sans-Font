@@ -100,9 +100,17 @@ async function main() {
         `${fileDir}/${infoName}`,
         JSON.stringify(fileInfo, null, 4) + "\n",
     );
-    console.log("下载成功");
 
     // 解压缩并获取版本信息
+    console.log("正在清理旧版本...");
+    for (const entry of fs.readdirSync(fileDir)) {
+        if (entry !== infoName) {
+            fs.rmSync(`${fileDir}/${entry}`, {
+                recursive: true,
+                force: true,
+            }); // 清理旧文件
+        }
+    }
     execSync(`7z x "${tmpDir}/${fontName}" -o"${tmpDir}"`);
     // workaround: fs.cpSync 在 Windows 上处理非 ASCII 路径时会崩溃
     // 加 filter: () => true 可绕过此问题
@@ -132,7 +140,7 @@ async function main() {
         throw new Error("未找到版本");
     }
     fs.writeFileSync(`${fileDir}/.version`, fontVer);
-    console.log(`版本: ${fontVer}`);
+    console.log(`更新到新版本: ${fontVer}`);
 }
 
 main().catch((error) => {
