@@ -1,6 +1,6 @@
 {
   "name": "harmonyos-sans-font",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "收录官方发布的HarmonyOS Sans字体",
   "main": "index.js",
   "scripts": {
