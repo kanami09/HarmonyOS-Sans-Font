@@ -54,7 +54,7 @@ async function main() {
     }
     const jsonRoot: ResponseJsonData = JSON.parse(decodeURIComponent(jsonStr));
     const child = jsonRoot.children.find(
-        (ele) => ele.vueAppComponentRawValue.Title?.value === "通用设计",
+        (ele) => ele.vueAppComponentRawValue.Title?.value === "字体与图标",
     );
     const card = child?.vueAppComponentRawValue.CardList.rawValue.find(
         (ele) => ele.cardTitle.value === "HarmonyOS Sans 字体",
@@ -116,7 +116,7 @@ async function main() {
     // 加 filter: () => true 可绕过此问题
     // Node.js issue: https://github.com/nodejs/node/issues/61878
     // 修复版本: v25.9.0
-    fs.cpSync(`${tmpDir}/HarmonyOS+Sans+字体/HarmonyOS Sans 字体`, fileDir, {
+    fs.cpSync(`${tmpDir}/HarmonyOS Sans`, fileDir, {
         recursive: true,
         force: true,
         filter: () => true,
